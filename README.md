@@ -58,8 +58,19 @@ pip install -r requirements.txt
 > If `requirements.txt` is not available, install the core dependencies manually:
 >
 > ```bash
-> pip install opencv-python numpy matplotlib
+> pip install opencv-python numpy matplotlib requests
 > ```
+
+### Local LLM Setup (Optional)
+
+CAPA can integrate with a local LLM for enhanced productivity suggestions and session summaries. To enable this feature:
+
+1. **Install LM Studio** or another OpenAI-compatible LLM server
+2. **Load a model**: Start your LLM server and load a model (recommended: `nvidia/nemotron-3-nano-4b` or similar)
+3. **Verify API**: Ensure the server runs on `http://127.0.0.1:1234` with OpenAI-compatible endpoints
+4. **Test connection**: The notebook will automatically test the API connection
+
+> **Note**: If no model is loaded, CAPA will still function with basic camera monitoring but without AI-powered suggestions.
 
 ## Usage
 
