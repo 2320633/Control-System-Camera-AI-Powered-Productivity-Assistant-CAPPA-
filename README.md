@@ -9,6 +9,15 @@ CAPA is an intelligent productivity assistant built to support students and prof
 - **Distraction Alerts**: Identifies potential distraction behaviors and provides a foundation for feedback or logging.
 - **Python-Driven Computer Vision**: Built on accessible Python libraries to make development and customization simple.
 
+Enhanced features:
+
+- **Head Detection (Frontal + Profile)**: Detects head position even when the user turns their head away from the camera, enabling more reliable presence detection.
+- **Eye Recognition & Attention Assessment**: Detects eyes within head regions to determine if the user is looking at the screen, has closed eyes, or if eyes are unrecognizable — used to infer distracted or focused states.
+- **Looking-Down / Orientation Detection**: Tracks vertical head position and profile orientation to flag when a user is looking down or away.
+- **Security-Themed Live UI**: Real-time overlay with head/eye boxes, state labels, and a compact sidebar for quick session metrics and alerts.
+- **Session Transcript & AI Summary**: Logs key events and uses a local LLM (optional) to generate a concise AI-powered session summary and recommendations.
+- **Detailed Report Generation**: After each session, CAPA saves a comprehensive text report (`CAPA_Session_Report_YYYYMMDD_HHMMSS.txt`) including timeline, statistics, motion analysis, expressions, head orientation, and AI insights.
+
 ## Why CAPA
 
 CAPA helps users build better study and work habits by providing an automated way to observe behavior in the workspace. It is especially useful for:
@@ -77,6 +86,35 @@ CAPA can integrate with a local LLM for enhanced productivity suggestions and se
 1. Launch the notebook or script that initializes the camera and analytics pipeline.
 2. Allow camera access when prompted.
 3. Follow the on-screen output or notebook cells to view detection results and productivity insights.
+
+### Start a Focus Session
+
+Open `CAPA.ipynb` and run the cell that defines `run_focus_session_enhanced()` (or import the function into a script). Start a session from the notebook by running:
+
+```python
+session_events, transcript = run_focus_session_enhanced(min_motion_area=1500)
+```
+
+- Controls: Press `S` to start monitoring, `C` to change camera, `Q` to quit, or click the on-screen STOP area.
+- The UI displays a live window with detected head/eye boxes, state labels, and a security-themed sidebar.
+
+### Generated Detailed Report
+
+After each session the notebook generates a comprehensive text report saved to the working directory. The report file is named like:
+
+`CAPA_Session_Report_YYYYMMDD_HHMMSS.txt`
+
+The report includes:
+- Session overview (duration, events, alerts)
+- Focus statistics (focused, distracted, absent percentages)
+- Motion analysis (average, peak, minimum)
+- Expression breakdown (NORMAL, EYES_CLOSED, LOOKING_DOWN, etc.)
+- Head orientation analysis (frontal vs profile)
+- AI-generated session analysis (if local LLM available)
+- Recommendations and suggested improvements
+- Detailed event timeline and session transcript
+
+The notebook will print the filename and full path when the report is saved and will also preview the report contents in the notebook output.
 
 ## Customization
 
