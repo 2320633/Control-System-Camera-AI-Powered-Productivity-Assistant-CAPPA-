@@ -1,0 +1,52 @@
+name: Refresh repository dashboard
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: repository-dashboard
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Generate dashboard
+        run: python dashboard/dashboard.py
+
+      - name: Detect generated changes
+        id: changes
+        run: |
+          if git diff --quiet -- README.md dashboard/assets/repository-summary.svg; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit and push dashboard updates
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md dashboard/assets/repository-summary.svg
+          if git diff --cached --quiet; then
+            echo "No staged dashboard changes; skipping commit."
+            exit 0
+          fi
+          git commit -m "docs(dashboard): refresh repository showcase"
+          git push

@@ -1,0 +1,63 @@
+{
+  "title": "CAPA | Camera AI Productivity Assistant",
+  "tagline": "A webcam-based focus companion with real-time computer vision and optional local AI.",
+  "overview": "CAPA (Control-System Camera AI-Powered Productivity Assistant) is a Python desktop application that uses a webcam to estimate desk presence, movement, and visual attention during work sessions. It pairs live feedback with session transcripts and detailed reports, and can optionally request coaching summaries from a local OpenAI-compatible language model.",
+  "excluded_directories": [
+    ".git",
+    ".venv",
+    "venv",
+    "__pycache__",
+    ".pytest_cache",
+    "node_modules",
+    "state"
+  ],
+  "features": [
+    {
+      "title": "Live focus sessions",
+      "description": "Capture webcam frames and combine motion with detected presence to classify focused, distracted, and absent states.",
+      "evidence": ["run_focus_session_enhanced", "run_security_session", "cv2.VideoCapture"]
+    },
+    {
+      "title": "Face, eye, and posture signals",
+      "description": "Use OpenCV face and eye cascades, body detection, and head-position signals to inform session feedback.",
+      "evidence": ["haarcascade_frontalface_default", "haarcascade_eye", "HOGDescriptor", "LOOKING_DOWN"]
+    },
+    {
+      "title": "Motion-based inactivity alerts",
+      "description": "Track motion over time and surface prompts when activity remains low.",
+      "evidence": ["detect_procrastination", "motion_history", "get_procrastination_suggestion"]
+    },
+    {
+      "title": "Optional local AI coaching",
+      "description": "Request productivity prompts and session summaries from a locally hosted, OpenAI-compatible language model.",
+      "evidence": ["summarize_session", "/v1/chat/completions", "LOCAL_LLM_URL"]
+    },
+    {
+      "title": "Session transcripts and reports",
+      "description": "Show live session feedback and save a detailed text report with focus, motion, expression, and recommendation summaries.",
+      "evidence": ["generate_detailed_report", "CAPA_Session_Report_", "transcript"]
+    }
+  ],
+  "roadmap": [
+    {
+      "title": "Add automated regression tests",
+      "description": "Cover motion thresholds, presence and attention classification, and report generation so changes can be checked without camera hardware.",
+      "completion_check": "tests"
+    },
+    {
+      "title": "Validate focus signals against labeled sessions",
+      "description": "Measure classification behavior across varied lighting, camera positions, and user-confirmed focus labels; document known limitations.",
+      "completion_check": "evaluation"
+    },
+    {
+      "title": "Add camera setup and calibration guidance",
+      "description": "Help users choose a camera position and tune detection thresholds for their lighting and workspace.",
+      "completion_check": "calibration"
+    },
+    {
+      "title": "Run project checks automatically",
+      "description": "Add a test-focused CI job that runs the regression suite and lightweight source checks on proposed changes.",
+      "completion_check": "test_workflow"
+    }
+  ]
+}

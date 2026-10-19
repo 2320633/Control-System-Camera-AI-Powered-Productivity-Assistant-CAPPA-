@@ -1,134 +1,120 @@
-# Control-System-Camera AI-Powered Productivity Assistant (CAPA)
+# CAPA | Camera AI Productivity Assistant
 
-CAPA is an intelligent productivity assistant built to support students and professionals in maintaining focus during study or work sessions. By leveraging standard webcam input and Python-based computer vision, the system analyzes desk activity, detects user presence, and identifies signs of distraction or sustained engagement.
+> A webcam-based focus companion with real-time computer vision and optional local AI.
 
-## Key Features
+![CAPA repository dashboard](./dashboard/assets/repository-summary.svg)
 
-- **Desk Presence Detection**: Detects whether a user is present and actively positioned at their desk.
-- **Focus Monitoring**: Tracks motion patterns and activity to infer periods of concentration.
-- **Distraction Alerts**: Identifies potential distraction behaviors and provides a foundation for feedback or logging.
-- **Python-Driven Computer Vision**: Built on accessible Python libraries to make development and customization simple.
+CAPA (Control-System Camera AI-Powered Productivity Assistant) is a Python desktop application that uses a webcam to estimate desk presence, movement, and visual attention during work sessions. It pairs live feedback with session transcripts and detailed reports, and can optionally request coaching summaries from a local OpenAI-compatible language model.
 
-Enhanced features:
+**Project repository:** [2320633/Control-System-Camera-AI-Powered-Productivity-Assistant-CAPPA-](https://github.com/2320633/Control-System-Camera-AI-Powered-Productivity-Assistant-CAPPA-)
 
-- **Head Detection (Frontal + Profile)**: Detects head position even when the user turns their head away from the camera, enabling more reliable presence detection.
-- **Eye Recognition & Attention Assessment**: Detects eyes within head regions to determine if the user is looking at the screen, has closed eyes, or if eyes are unrecognizable — used to infer distracted or focused states.
-- **Looking-Down / Orientation Detection**: Tracks vertical head position and profile orientation to flag when a user is looking down or away.
-- **Security-Themed Live UI**: Real-time overlay with head/eye boxes, state labels, and a compact sidebar for quick session metrics and alerts.
-- **Session Transcript & AI Summary**: Logs key events and uses a local LLM (optional) to generate a concise AI-powered session summary and recommendations.
-- **Detailed Report Generation**: After each session, CAPA saves a comprehensive text report (`CAPA_Session_Report_YYYYMMDD_HHMMSS.txt`) including timeline, statistics, motion analysis, expressions, head orientation, and AI insights.
+## Highlights
 
-## Why CAPA
+- **Live focus sessions** — Capture webcam frames and combine motion with detected presence to classify focused, distracted, and absent states.
+- **Face, eye, and posture signals** — Use OpenCV face and eye cascades, body detection, and head-position signals to inform session feedback.
+- **Motion-based inactivity alerts** — Track motion over time and surface prompts when activity remains low.
+- **Optional local AI coaching** — Request productivity prompts and session summaries from a locally hosted, OpenAI-compatible language model.
+- **Session transcripts and reports** — Show live session feedback and save a detailed text report with focus, motion, expression, and recommendation summaries.
 
-CAPA helps users build better study and work habits by providing an automated way to observe behavior in the workspace. It is especially useful for:
+## Project snapshot
 
-- Students preparing for exams or study sessions
-- Remote workers seeking improved productivity
-- Anyone who wants objective insight into desk-focused time
+| Metric | Value |
+| --- | ---: |
+| Python source lines | 1,925 |
+| Declared dependencies | 8 |
+| Session report examples | 4 |
+| Project files | 9 |
+| Git commits | 5 |
+| Languages and formats | Markdown (2), Python (2), JSON (1), Jupyter notebooks (1), Python dependencies (1), YAML (1) |
 
-## Project Structure
+The inventory excludes generated session report contents and local runtime state. Report examples are counted by filename only; their personal session data is not reproduced here.
 
-- `CAPA.ipynb` — Interactive notebook for prototyping, testing, and demonstrating the camera-based productivity assistant.
-- `README.md` — Project overview, installation guidelines, and usage instructions.
+## Progress and achievements
 
-## Getting Started
+- **5 code-backed capabilities detected:** Live focus sessions, Face, eye, and posture signals, Motion-based inactivity alerts, Optional local AI coaching, Session transcripts and reports.
+- **4 session report examples present**; this dashboard counts filenames only.
+- **Latest recorded change:** 2026-05-22 — Py conversion and testing.
 
-### Prerequisites
+## Project structure
+
+- [`.github/workflows/dashboard.yml`](./.github/workflows/dashboard.yml)
+- [`CAPA.ipynb`](./CAPA.ipynb)
+- [`CAPA.py`](./CAPA.py)
+- [`dashboard/assets/repository-summary.svg`](./dashboard/assets/repository-summary.svg)
+- [`dashboard/config.json`](./dashboard/config.json)
+- [`dashboard/dashboard.py`](./dashboard/dashboard.py)
+- [`dashboard/README_TEMPLATE.md`](./dashboard/README_TEMPLATE.md)
+- [`README.md`](./README.md)
+- [`requirements.txt`](./requirements.txt)
+
+## Getting started
+
+### Requirements
 
 - Python 3.8 or later
-- Webcam or compatible camera device
-- Recommended Python packages: `opencv-python`, `numpy`, `matplotlib` (or similar CV dependencies)
+- A webcam supported by OpenCV
 
-### Installation
-
-1. Clone the repository:
+### Install
 
 ```bash
-git clone https://github.com/2320633/CAPA.git
-cd CAPA
+git clone https://github.com/2320633/Control-System-Camera-AI-Powered-Productivity-Assistant-CAPPA-.git
+cd Control-System-Camera-AI-Powered-Productivity-Assistant-CAPPA-
+python -m venv .venv
 ```
 
-2. Create and activate a virtual environment:
+Activate the virtual environment, then install the project dependencies:
 
 ```bash
-python -m venv venv
-# Windows
-venv\Scripts\activate
+# Windows PowerShell
+.venv\Scripts\Activate.ps1
+
 # macOS / Linux
-source venv/bin/activate
+source .venv/bin/activate
+
+python -m pip install -r requirements.txt
 ```
 
-3. Install required packages:
+### Run a session
+
+Start the desktop monitor with:
 
 ```bash
-pip install -r requirements.txt
+python CAPA.py
 ```
 
-> If `requirements.txt` is not available, install the core dependencies manually:
->
-> ```bash
-> pip install opencv-python numpy matplotlib requests
-> ```
+Allow camera access when prompted. The OpenCV window supports **S** to begin, **C** to switch cameras, and **Q** to quit. The interactive walkthrough is also available in [CAPA.ipynb](./CAPA.ipynb).
 
-### Local LLM Setup (Optional)
+### Optional local AI
 
-CAPA can integrate with a local LLM for enhanced productivity suggestions and session summaries. To enable this feature:
+For AI-generated prompts and summaries, start an OpenAI-compatible local model server at `http://127.0.0.1:1234` before running CAPA. The current implementation requests `nvidia/nemotron-3-nano-4b`; the local server must have a compatible model loaded. Camera monitoring and basic session analysis are separate from this optional service.
 
-1. **Install LM Studio** or another OpenAI-compatible LLM server
-2. **Load a model**: Start your LLM server and load a model (recommended: `nvidia/nemotron-3-nano-4b` or similar)
-3. **Verify API**: Ensure the server runs on `http://127.0.0.1:1234` with OpenAI-compatible endpoints
-4. **Test connection**: The notebook will automatically test the API connection
+## Roadmap
 
-> **Note**: If no model is loaded, CAPA will still function with basic camera monitoring but without AI-powered suggestions.
+The items below are generated from the current repository contents. A milestone disappears automatically when its corresponding tests, evaluation assets, calibration guidance, or test workflow are added.
 
-## Usage
+- **Add automated regression tests** — Cover motion thresholds, presence and attention classification, and report generation so changes can be checked without camera hardware.
+- **Validate focus signals against labeled sessions** — Measure classification behavior across varied lighting, camera positions, and user-confirmed focus labels; document known limitations.
+- **Add camera setup and calibration guidance** — Help users choose a camera position and tune detection thresholds for their lighting and workspace.
+- **Run project checks automatically** — Add a test-focused CI job that runs the regression suite and lightweight source checks on proposed changes.
 
-1. Launch the notebook or script that initializes the camera and analytics pipeline.
-2. Allow camera access when prompted.
-3. Follow the on-screen output or notebook cells to view detection results and productivity insights.
+## Recent development
 
-### Start a Focus Session
+- **Latest commit:** Py conversion and testing
+- **Latest commit date:** 2026-05-22
+- **Recent commits:**
 
-Open `CAPA.ipynb` and run the cell that defines `run_focus_session_enhanced()` (or import the function into a script). Start a session from the notebook by running:
+- `2026-05-22` — Py conversion and testing
+- `2026-05-21` — Optimization and some feature update
+- `2026-05-11` — Enhance CAPA notebook: LLM & vision features
+- `2026-05-11` — Add CAPA notebook and update README
+- `2026-05-11` — Initial commit
 
-```python
-session_events, transcript = run_focus_session_enhanced(min_motion_area=1500)
-```
+## Privacy and interpretation
 
-- Controls: Press `S` to start monitoring, `C` to change camera, `Q` to quit, or click the on-screen STOP area.
-- The UI displays a live window with detected head/eye boxes, state labels, and a security-themed sidebar.
+CAPA reads webcam frames for on-device OpenCV analysis. The application writes text session reports to its working directory; inspect and manage those files as personal data. When enabled, AI prompts and session summaries are sent to the configured local model server. Focus and attention labels are heuristic signals, not objective measurements, and can be affected by lighting, camera placement, and individual differences.
 
-### Generated Detailed Report
+## Dashboard maintenance
 
-After each session the notebook generates a comprehensive text report saved to the working directory. The report file is named like:
+This README and its summary graphic are regenerated daily by [`.github/workflows/dashboard.yml`](./.github/workflows/dashboard.yml). The generator uses Python's standard library, reads repository metadata and source files, and updates these generated files only when their content changes.
 
-`CAPA_Session_Report_YYYYMMDD_HHMMSS.txt`
-
-The report includes:
-- Session overview (duration, events, alerts)
-- Focus statistics (focused, distracted, absent percentages)
-- Motion analysis (average, peak, minimum)
-- Expression breakdown (NORMAL, EYES_CLOSED, LOOKING_DOWN, etc.)
-- Head orientation analysis (frontal vs profile)
-- AI-generated session analysis (if local LLM available)
-- Recommendations and suggested improvements
-- Detailed event timeline and session transcript
-
-The notebook will print the filename and full path when the report is saved and will also preview the report contents in the notebook output.
-
-## Customization
-
-- Adjust detection thresholds, region-of-interest parameters, or behavior rules in the notebook or Python script.
-- Extend the system to log session metrics, trigger notifications, or integrate with productivity tools.
-
-## Contribution
-
-Contributions are welcome. To propose enhancements or fixes:
-
-1. Open an issue describing the feature or bug.
-2. Fork the repository.
-3. Submit a pull request with your improvements.
-
-## License
-
-This project is open source and may be used, modified, and shared under the terms of its chosen license.
+**Dashboard last generated:** 2026-10-19 (UTC)

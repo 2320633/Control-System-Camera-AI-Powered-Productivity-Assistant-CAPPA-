@@ -11,7 +11,7 @@
 # Install the required Python packages, then run the next cells. The notebook will test the API connection and report success or failure.
 
 # %%
-# pip install transformers torch accelerate opencv-python numpy requests twilio
+# pip install transformers torch accelerate "opencv-python<5" numpy requests twilio
 # %% [markdown]
 # ## Load the LLM and define helper functions
 #
@@ -29,6 +29,7 @@ except ImportError:
 
 # Local LLM API endpoint
 LOCAL_LLM_URL = "http://127.0.0.1:1234"
+LOCAL_LLM_MODEL = "nvidia/nemotron-3-nano-4b"
 API_ENDPOINT = f"{LOCAL_LLM_URL}/v1/chat/completions"
 
 # Ensure stdout/stderr use UTF-8 to avoid encoding errors when printing LLM responses
@@ -46,7 +47,7 @@ def test_local_api():
         response = requests.post(
             API_ENDPOINT,
             json={
-                "model": "local",
+                "model": LOCAL_LLM_MODEL,
                 "messages": [{"role": "user", "content": "test"}],
                 "max_tokens": 10,
                 "temperature": 0.7
@@ -83,7 +84,7 @@ def generate_productivity_message(prompt: str, max_new_tokens: int = 128):
         response = requests.post(
             API_ENDPOINT,
             json={
-                "model": "local",
+                "model": LOCAL_LLM_MODEL,
                 "messages": [{"role": "user", "content": prompt}],
                 "max_tokens": max_new_tokens,
                 "temperature": 0.8,
@@ -1505,20 +1506,4 @@ if __name__ == "__main__":
     main()
 
 
-# Generate and save the detailed report
-report_filename, report_text = generate_detailed_report(
-    session_events, 
-    transcript, 
-    summary, 
-    recommendation, 
-    improvements, 
-    distraction_reason, 
-    focus_percentage
-)
-
-# Display the report in notebook
-print("\n" + "=" * 80)
-print("GENERATED REPORT PREVIEW")
-print("=" * 80)
-print(report_text)
 
