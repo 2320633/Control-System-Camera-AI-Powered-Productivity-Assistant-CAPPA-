@@ -24,7 +24,7 @@ CAPA (Control-System Camera AI-Powered Productivity Assistant) is a Python deskt
 | Declared dependencies | 8 |
 | Session report examples | 4 |
 | Project files | 9 |
-| Git commits | 8 |
+| Git commits | 9 |
 | Languages and formats | Markdown (2), Python (2), JSON (1), Jupyter notebooks (1), Python dependencies (1), YAML (1) |
 
 The inventory excludes generated session report contents and local runtime state. Report examples are counted by filename only; their personal session data is not reproduced here.
@@ -33,7 +33,7 @@ The inventory excludes generated session report contents and local runtime state
 
 - **5 code-backed capabilities detected:** Live focus sessions, Face, eye, and posture signals, Motion-based inactivity alerts, Optional local AI coaching, Session transcripts and reports.
 - **4 session report examples present**; this dashboard counts filenames only.
-- **Latest recorded change:** 2026-10-21 — docs(dashboard): refresh repository showcase.
+- **Latest recorded change:** 2026-10-22 — docs(dashboard): refresh repository showcase.
 
 ## Project structure
 
@@ -100,14 +100,14 @@ The items below are generated from the current repository contents. A milestone 
 ## Recent development
 
 - **Latest commit:** docs(dashboard): refresh repository showcase
-- **Latest commit date:** 2026-10-21
+- **Latest commit date:** 2026-10-22
 - **Recent commits:**
 
+- `2026-10-22` — docs(dashboard): refresh repository showcase
 - `2026-10-21` — docs(dashboard): refresh repository showcase
 - `2026-10-20` — docs(dashboard): refresh repository showcase
 - `2026-10-19` — dasboard
 - `2026-05-22` — Py conversion and testing
-- `2026-05-21` — Optimization and some feature update
 
 ## Privacy and interpretation
 
@@ -117,4 +117,4 @@ CAPA reads webcam frames for on-device OpenCV analysis. The application writes t
 
 This README and its summary graphic are regenerated daily by [`.github/workflows/dashboard.yml`](./.github/workflows/dashboard.yml). The generator uses Python's standard library, reads repository metadata and source files, and updates these generated files only when their content changes.
 
-**Dashboard last generated:** 2026-10-22 (UTC)
+**Dashboard last generated:** 2026-10-23 (UTC)
